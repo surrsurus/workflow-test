@@ -1,7 +1,7 @@
 name: Automatically create production promotion pull request
 
 on:
-  workflow-dispatch:
+  workflow_dispatch:
   schedule:
     # Runs every friday morning (see https://crontab.guru)
     - cron: '0 9 * * FRI'
