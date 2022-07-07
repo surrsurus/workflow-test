@@ -1,0 +1,24 @@
+name: Automatically create production promotion pull request
+
+on:
+  schedule:
+    # Runs every friday morning (see https://crontab.guru)
+    - cron: '0 9 * * FRI'
+jobs:
+  build:
+    name: Create production promotion PR
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: staging
+      - name: Create PR
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: "staging"
+          destination_branch: "master"
+          pr_title: "[CI] Production Promotion"
+          pr_body: "Merge `staging` into `master` for deployment to production"
+          pr_label: "ci"
+          pr_allow_empty: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
